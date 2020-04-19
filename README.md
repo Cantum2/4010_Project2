@@ -1,2 +1,15 @@
 # 4010_Project2
-Initial commit
+
+## Environment
+1. Download MinGW installer [here](http://www.mingw.org/wiki/Install_MinGW)
+2. install mingw32-gcc-g++-
+3. You might have to restart your pc here
+
+
+# For debugging
+1. install everything that mentions gdb from the mingw installer 
+2. Add MinGW/bin to your env path variable
+3. You might have to restart your pc here
+ 
+## Contributing
+After you have a way to compile cpp you should be all set up to clone 
