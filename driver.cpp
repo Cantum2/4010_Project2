@@ -63,45 +63,6 @@ vector<string> readRow(istream& str){
   return row; 
 }
 
-/**
- opens and creates file
- (a job for python)
- @param fileName file to create or update
- @param colStart column to start diagnol at
- @param value hashed value to write starting at col start
-*/
-void writeHashToCSV(string fileName, string value){
-  vector<char> hashChars(value.begin(), value.end()); // convert hashed value to vector
-  string temp, newRow;
-  int hashCharsIndex = 0;
-  fstream file; 
-  file.open(fileName, ios::out | ios::app);
-  cout<<"1"<<endl;
-  while (hashCharsIndex < hashChars.size()){
-    // read each row 
-    vector<string> row = readRow(file); // _ 9 % $
-    cout<<"2"<<endl;
-    // start adding new has into csv
-    string s(1, hashChars[hashCharsIndex++]); // "5" 
-    cout<<s<<endl;
-    cout<<"3"<<endl;
-    row.push_back(s); // _ 9 % $ 5
-    cout<<"4"<<endl;
-    // read vector back to string
-    // TODO: optimize this
-    cout<<"5"<<endl;
-    for(size_t vecIndex = 0; vecIndex < row.size(); vecIndex++){
-      newRow += row[vecIndex] + ",";
-    }
-    cout<<newRow<<endl;
-    newRow += "\n";
-    file << newRow; 
-  } 
-  file.close();
-  cout<<"end f"<<endl;
-  
-}
-
 // Possible concept for writing (and reading) diagonal of csv data
   // Writes a diagonal of 1's in csv with 0's in upper right and lower left cells.
   // Assumes that variables specified by rows, not columns (my bad, I can change that).
