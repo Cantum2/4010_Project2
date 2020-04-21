@@ -11,7 +11,7 @@ using namespace std;
 
 const string FILE_NAME = "output.csv";
 
-void writeHashToCSV(string colName, string value);
+void writeHashToCSV(string fileName);
 void writeJunk(string fileName,int lastUsedColumn);
 string getColName(string varName, string value);
 vector<string> readRow(istream& str);
@@ -22,7 +22,7 @@ int main(){
 
     cout<<"Hello"<<endl;
     cout<<"Hello"<<encoder->encodeDiagonal("guy", 5)<<endl;
-    writeHashToCSV("data.csv", "%^&*#");
+    writeHashToCSV("data.csv");
     return 0;   
 }
 
@@ -69,7 +69,7 @@ vector<string> readRow(istream& str){
 /**
  @param filename The name of the file to create or update
  */
-void write_diagonal(string filename) {
+void writeHashToCSV(string filename) {
     fstream fout;
     fout.open(filename, ios::out | ios::app);
     int startRow = 0, rowWidth = 10;
