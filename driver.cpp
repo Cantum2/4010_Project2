@@ -20,8 +20,9 @@ int main(){
 
     Encoder *encoder = new Encoder();     
     cout<<"Hello"<<endl;
-    cout<<"guy5 encodes to "<<encoder->encodeVariable("guy", 5)<<endl;
-    cout<<"&!;(:6z decodes to "<<encoder->generateHash("&!;(:6z")<<endl;
+    string res = encoder->encodeVariable("guy", 5);
+    cout<<"guy5 encodes to "<<res<<endl;
+    cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
     writeHashToCSV("data.csv");
     return 0;   
 }

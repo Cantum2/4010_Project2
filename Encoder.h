@@ -11,6 +11,8 @@ class Encoder {
         string encodeVariable(string varName, long value);
         string generateHash(string varName);
         char getKey();
+        char getSeparator();
     private:
         char key = 'O';
+        char separator = '_';
 };
