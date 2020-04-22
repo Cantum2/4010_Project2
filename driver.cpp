@@ -18,10 +18,10 @@ vector<string> readRow(istream& str);
 
 int main(){
 
-    Encoder *encoder = new Encoder(); 
-
+    Encoder *encoder = new Encoder();     
     cout<<"Hello"<<endl;
-    cout<<"Hello"<<encoder->encodeDiagonal("guy", 5)<<endl;
+    cout<<"guy5 encodes to "<<encoder->encodeVariable("guy", 5)<<endl;
+    cout<<"&!;(:6z decodes to "<<encoder->generateHash("&!;(:6z")<<endl;
     writeHashToCSV("data.csv");
     return 0;   
 }
