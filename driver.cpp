@@ -67,38 +67,31 @@ vector<string> readRow(istream& str){
 // the old data before updating
 /**
  @param filename The name of the file to create or update
- @param hashes the vector of variable data to hash and insert diagonally
+ @param varHashes the vector of variable data to hash and insert diagonally
  */
-void writeHashToCsv(string filename, vector<string> hashes) {
+void writeHashToCsv(string filename, vector<string> varHashes) {
   fstream fout;
   fout.open(filename, ios::out | ios::trunc);
   int maxLength = 0;
+  int tempLength = 0;
   // Get length of longest string
-  for (size_t v = 0; v < hashes.size(); v++) {
-    if (int tempLength = hashes.at(v).length() > maxLength) {
+  for (int v = 0; v < varHashes.size(); v++) {
+    tempLength = varHashes.at(v).length();
+    if (tempLength > maxLength) {
       maxLength = tempLength;
     }
   }
+  // Place hashes into csv file
   int offset = 0;
-  for (size_t i = 0; i < maxLength; i++) {
-    for (size_t j = 0; j < maxLength; j++) {
-      // Place hashes.at(j).at(i) @ cell [j + offset][i]
+  for (int i = 0; i < maxLength; i++) {
+    for (int k = 0; k < offset; k++) {
+      fout << " " << ", ";
+    }
+    for (int j = 0; j < varHashes.size(); j++) {
+      if (i < varHashes.at(j).size()) fout << varHashes.at(j).at(i) << ", ";
+      else fout << " " << ", ";
     }
     offset += 1;
+    fout << "\n";
   }
 }
-
-/*
-void writeHashToCSV(string filename, vector<string> updateData) {
-    fstream fout;
-    fout.open(filename, ios::out | ios::trunc);
-    int startRow = 0, rowWidth = 10;
-    int i = 0, diag = 0;
-    for(diag = 0; diag < rowWidth - 1; diag++) {        
-        for(i = 0; i < diag; i++) fout << 0 << ", ";
-        fout << 1;
-        for(i = diag + 1; i < rowWidth - 1; i++) fout << ", " << 0;
-        fout << "\n";
-    }
-}
-*/
