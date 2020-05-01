@@ -67,7 +67,7 @@ vector<string> readRow(istream& str){
 // the old data before updating
 /**
  @param filename The name of the file to create or update
- @param varHashes the vector of variable data to hash and insert diagonally
+ @param varHashes the vector of variable hashed data and insert diagonally
  */
 void writeHashToCsv(string filename, vector<string> varHashes) {
   fstream fout;
