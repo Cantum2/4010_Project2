@@ -9,20 +9,19 @@ using namespace std;
 
 const string FILE_NAME = "output.csv";
 
-void writeDiagHashToCSV(string fileName);
+void writeDiagHashToCSV(string fileName, vector<string> varHashes);
 void writeJunk(string fileName,int lastUsedColumn);
 string getColName(string varName, string value);
 vector<string> readRow(istream& str);
 char randCharacter();
 
 int main(){
-
-    Encoder *encoder = new Encoder();     
+    //Encoder *encoder = new Encoder();     
     cout<<"Hello"<<endl;
-    string res = encoder->encodeVariable("guy", 5);
-    cout<<"guy5 encodes to "<<res<<endl;
-    cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
-    writeDiagHashToCSV("data.csv");
+    //string res = encoder->encodeVariable("guy", 5);
+    //cout<<"guy5 encodes to "<<res<<endl;
+    //cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
+    writeDiagHashToCSV("dataDiag.csv", {"guy", "0x401123", "girl", "1234", "3.14", "abc"});
     return 0;   
 }
 
@@ -59,7 +58,7 @@ vector<string> readRow(istream& str){
  @param filename The name of the file to create or update
  @param varHashes the vector of variable hashed data and insert diagonally
  */
-void writeDiagHashToCsv(string filename, vector<string> varHashes) {
+void writeDiagHashToCSV(string filename, vector<string> varHashes) {
   // "maxLength" is the length of longest hashed string
   // "maxWidth" is number of columns needed for data
   // "offset" keeps track of placement in diagonal
@@ -78,7 +77,7 @@ void writeDiagHashToCsv(string filename, vector<string> varHashes) {
   for (int i = 0; i < maxLength; i++) {
     int j = 0;
     for (int k = 0; k < offset; k++) fout << randCharacter() << ", ";
-    for (; j < varHashes.size(); j++) {
+    for (; j < varHashes.size() && j < maxWidth - offset; j++) {
       if (i < varHashes.at(j).size()) fout << varHashes.at(j).at(i) << ", ";
       else fout << randCharacter() << ", ";
     }
@@ -89,7 +88,8 @@ void writeDiagHashToCsv(string filename, vector<string> varHashes) {
 }
 
 /**
-* Generates a random character (letter or number)
+ Generates a random character (letter or number)
+ @returns a char that is either a letter or a number
 */
 char randCharacter() {
   int letterOrNum = rand() % 2;
