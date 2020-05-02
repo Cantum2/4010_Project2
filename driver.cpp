@@ -21,7 +21,7 @@ int main(){
     //string res = encoder->encodeVariable("guy", 5);
     //cout<<"guy5 encodes to "<<res<<endl;
     //cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
-    writeDiagHashToCSV("dataDiag.csv", {"guy", "0x401123", "girl", "1234", "3.14", "abc"});
+    writeDiagHashToCSV("dataDiag.csv", {"johnnyappleseed", "guy", "0x401123", "girl", "1234", "3.14", "abc"});
     return 0;   
 }
 
