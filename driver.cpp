@@ -9,7 +9,7 @@ using namespace std;
 
 const string FILE_NAME = "output.csv";
 
-void writeHashToCSV(string fileName);
+void writeDiagHashToCSV(string fileName);
 void writeJunk(string fileName,int lastUsedColumn);
 string getColName(string varName, string value);
 vector<string> readRow(istream& str);
@@ -22,7 +22,7 @@ int main(){
     string res = encoder->encodeVariable("guy", 5);
     cout<<"guy5 encodes to "<<res<<endl;
     cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
-    writeHashToCSV("data.csv");
+    writeDiagHashToCSV("data.csv");
     return 0;   
 }
 
@@ -59,7 +59,7 @@ vector<string> readRow(istream& str){
  @param filename The name of the file to create or update
  @param varHashes the vector of variable hashed data and insert diagonally
  */
-void writeHashToCsv(string filename, vector<string> varHashes) {
+void writeDiagHashToCsv(string filename, vector<string> varHashes) {
   fstream fout;
   fout.open(filename, ios::out | ios::trunc);
   // 1. Get length of longest string
