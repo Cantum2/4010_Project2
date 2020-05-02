@@ -13,6 +13,7 @@ void writeHashToCSV(string fileName);
 void writeJunk(string fileName,int lastUsedColumn);
 string getColName(string varName, string value);
 vector<string> readRow(istream& str);
+char randCharacter();
 
 int main(){
 
@@ -32,17 +33,6 @@ int main(){
  */
 int getColName(string varName){
   return 0;
-}
-
-
-
-/**
-  fills the upp and lower triangles with junk
-  @param fileName file to write to
-  @param lastUsedColumn highest column number that contains a value
- */
-void writeJunk(string fileName, int lastUsedColumn){
-
 }
 
 vector<string> readRow(istream& str){
@@ -72,26 +62,37 @@ vector<string> readRow(istream& str){
 void writeHashToCsv(string filename, vector<string> varHashes) {
   fstream fout;
   fout.open(filename, ios::out | ios::trunc);
-  int maxLength = 0;
-  int tempLength = 0;
-  // Get length of longest string
+  // 1. Get length of longest string
+  // 2. Get max width of csv file (number of columns used for diagonal data)
+  int maxLength = 0, maxWidth = 0, temp = 0, offset = 0;
   for (int v = 0; v < varHashes.size(); v++) {
-    tempLength = varHashes.at(v).length();
-    if (tempLength > maxLength) {
-      maxLength = tempLength;
-    }
+    temp = varHashes.at(v).length();
+    if (temp > maxLength) maxLength = temp;
+    temp = v + varHashes.at(v).length();
+    if (temp > maxWidth) maxWidth = temp;
   }
   // Place hashes into csv file
-  int offset = 0;
   for (int i = 0; i < maxLength; i++) {
-    for (int k = 0; k < offset; k++) {
-      fout << " " << ", ";
-    }
-    for (int j = 0; j < varHashes.size(); j++) {
+    for (int k = 0; k < offset; k++) fout << randCharacter() << ", ";
+    int j = 0;
+    for (; j < varHashes.size(); j++) {
       if (i < varHashes.at(j).size()) fout << varHashes.at(j).at(i) << ", ";
-      else fout << " " << ", ";
+      else fout << randCharacter() << ", ";
     }
+    for (; j < maxWidth - offset; j++) fout << randCharacter() << ", ";
     offset += 1;
     fout << "\n";
+  }
+}
+
+/**
+* Generates a random character (letter or number)
+*/
+char randCharacter() {
+  int letterOrNum = rand() % 2;
+  if (letterOrNum == 0) {
+    return rand() % 26 + 65;
+  } else {
+    return rand() % 10 + 48;
   }
 }
