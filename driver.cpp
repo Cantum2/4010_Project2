@@ -67,7 +67,7 @@ void writeDiagHashToCsv(string filename, vector<string> varHashes) {
   // file output stream that overwrites file with new data
   fstream fout;
   fout.open(filename, ios::out | ios::trunc);
-  // Gets maxWidth and maxHeight
+  // Gets maxLength and maxWidth
   for (int v = 0; v < varHashes.size(); v++) {
     temp = varHashes.at(v).length();
     if (temp > maxLength) maxLength = temp;
