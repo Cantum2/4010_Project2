@@ -40,7 +40,7 @@ vector<string> readRow(istream& str){
   string line, word, temp;  
   getline(str, line);
   stringstream stream(line);
-  string cell; 
+  string cell;
 
   row.clear();
   while(std::getline(stream, cell, ',')){
@@ -60,21 +60,24 @@ vector<string> readRow(istream& str){
  @param varHashes the vector of variable hashed data and insert diagonally
  */
 void writeDiagHashToCsv(string filename, vector<string> varHashes) {
+  // "maxLength" is the length of longest hashed string
+  // "maxWidth" is number of columns needed for data
+  // "offset" keeps track of placement in diagonal
+  int maxLength = 0, maxWidth = 0, temp = 0, offset = 0;
+  // file output stream that overwrites file with new data
   fstream fout;
   fout.open(filename, ios::out | ios::trunc);
-  // 1. Get length of longest string
-  // 2. Get max width of csv file (number of columns used for diagonal data)
-  int maxLength = 0, maxWidth = 0, temp = 0, offset = 0;
+  // Gets maxWidth and maxHeight
   for (int v = 0; v < varHashes.size(); v++) {
     temp = varHashes.at(v).length();
     if (temp > maxLength) maxLength = temp;
     temp = v + varHashes.at(v).length();
     if (temp > maxWidth) maxWidth = temp;
   }
-  // Place hashes into csv file
+  // Place hashed strings into csv file in diagonal fashion
   for (int i = 0; i < maxLength; i++) {
-    for (int k = 0; k < offset; k++) fout << randCharacter() << ", ";
     int j = 0;
+    for (int k = 0; k < offset; k++) fout << randCharacter() << ", ";
     for (; j < varHashes.size(); j++) {
       if (i < varHashes.at(j).size()) fout << varHashes.at(j).at(i) << ", ";
       else fout << randCharacter() << ", ";
@@ -90,9 +93,6 @@ void writeDiagHashToCsv(string filename, vector<string> varHashes) {
 */
 char randCharacter() {
   int letterOrNum = rand() % 2;
-  if (letterOrNum == 0) {
-    return rand() % 26 + 65;
-  } else {
-    return rand() % 10 + 48;
-  }
+  if (letterOrNum == 0) return rand() % 26 + 65;
+  else return rand() % 10 + 48;
 }
