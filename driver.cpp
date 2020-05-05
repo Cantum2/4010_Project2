@@ -16,12 +16,12 @@ vector<string> readRow(istream& str);
 char randCharacter();
 
 int main(){
-    //Encoder *encoder = new Encoder();     
+    Encoder *encoder = new Encoder();     
     cout<<"Hello"<<endl;
-    //string res = encoder->encodeVariable("guy", 5);
-    //cout<<"guy5 encodes to "<<res<<endl;
-    //cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
-    writeDiagHashToCSV("dataDiag.csv", {"johnnyappleseed", "guy", "0x401123", "girl", "1234", "3.14", "abc"});
+    string res = encoder->encodeVariable("guy", 5);
+    cout<<"guy5 encodes to "<<res<<endl;
+    cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
+    writeDiagHashToCSV("dataDiag.csv", {"appleseed", "guy", "0x401123", "girl", "1234", "3.14", "abc"});
     return 0;   
 }
 
