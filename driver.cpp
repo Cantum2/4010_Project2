@@ -8,47 +8,70 @@
 using namespace std;
 
 const string FILE_NAME = "output.csv";
+Encoder *encoder = new Encoder();
 
 void writeDiagHashToCSV(string fileName, vector<string> varHashes);
 void writeJunk(string fileName,int lastUsedColumn);
 string getColName(string varName, string value);
-vector<string> readRow(istream& str);
+string readRow(string const &fileName);
 char randCharacter();
+void addRowHashes(string const &fileName);
 
-int main(){
-    Encoder *encoder = new Encoder();     
+int main() {    
     cout<<"Hello"<<endl;
     string res = encoder->encodeVariable("guy", 5);
     cout<<"guy5 encodes to "<<res<<endl;
     cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
-    writeDiagHashToCSV("dataDiag.csv", {"appleseed", "guy", "0x401123", "girl", "1234", "3.14", "abc"});
-    return 0;   
+    writeDiagHashToCSV("dataDiag.csv", {"johnnyappleseed", "guy", "0x401123", "girl", "1234", "3.14", "abc"});
+    cout << "Row hashes to: " << encoder->generateHash(readRow("dataDiag.csv"));
+    //addRowHashes("dataDiag.csv");
+    return 0;
 }
 
 /**
   based on the var name it will return the column of which to begin diagnol
-  @param varname variable name to get diagnol start location
-  @returns the column number that the diagnol will start based on var name
+  @param varname variable name to get diagonal start location
+  @returns the column number that the diagonal will start based on var name
  */
-int getColName(string varName){
+int getColName(string varName) {
   return 0;
 }
 
-vector<string> readRow(istream& str){
-  vector<string> row;
-  string line, word, temp;  
-  getline(str, line);
+string readRow(string const &fileName) {
+  ifstream file(fileName);
+  string row = "", line = "", cell = "";
+  getline(file, line);
   stringstream stream(line);
-  string cell;
+  
+  while(getline(stream, cell, ',')) row += cell;
+  for (int i = 0; i < row.length(); i++) row.erase(row.find(' '), 1);
+  file.close();
+  return row;
+}
 
-  row.clear();
-  while(std::getline(stream, cell, ',')){
-    row.push_back(cell);
-  }
-  if(!stream && cell.empty()){
-    row.push_back("");
-  }
-  return row; 
+// Function to write hash at end of file
+// 1. Take the hash of each row
+// 2. We put it in the next column (where cell is empty)
+// 3. Keep going until no more lines
+void addRowHashes(string const &fileName) {
+   ofstream write;
+   ifstream read(fileName);
+   
+   string hash = encoder->generateHash(readRow(fileName));
+   string line, cell;
+
+   getline(read, line);
+   //stringstream stream(line);
+   //while(getline(stream, cell, ',')) {
+   //    write << cell << ',';
+   //}
+   //write << hash << ",";
+
+   write.open(fileName, ios::out | ios::trunc);
+   write << line << "," << hash << ",\n";
+
+   read.close();
+   write.close();
 }
 
 // Takes in updated variable data and filename, then
@@ -85,6 +108,7 @@ void writeDiagHashToCSV(string filename, vector<string> varHashes) {
     offset += 1;
     fout << "\n";
   }
+  fout.close();
 }
 
 /**

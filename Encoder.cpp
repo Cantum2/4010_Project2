@@ -33,7 +33,7 @@ char Encoder::getSeparator() {
 }
 
 
-string  Encoder::generateHash(string varName) {
+string Encoder::generateHash(string varName) {
         int len = varName.length();
         for(int i = 0; i < len; i++){
                 varName[i] = varName[i] ^ Encoder::getKey(); 
