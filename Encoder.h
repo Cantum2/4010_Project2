@@ -13,6 +13,6 @@ class Encoder {
         char getKey();
         char getSeparator();
     private:
-        char key = '3';
+        char key = '1';
         char separator = '_';
 };
