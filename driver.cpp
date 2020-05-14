@@ -10,6 +10,7 @@
 using namespace std;
 
 const string FILE_NAME = "output.csv";
+vector<char> randChars;
 Encoder *encoder = new Encoder();
 
 void writeDiagsHashToCSV(char const filename[], vector<string> varHashes);
@@ -18,20 +19,79 @@ string getColName(string varName, string value);
 string readRow(string const &fileName);
 char randCharacter();
 void addRowHashes(char const fileName[]);
-void deleteOld();
+void deleteOldCSV(const char fileName[]);
+void autoChangeValues();
+bool checkHashes();
+void randCharacterVector();
 
 int main(){    
     cout<<"Hello"<<endl;
     string res = encoder->encodeVariable("guy", 5);
     cout<<"guy5 encodes to "<<res<<endl;
     cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
-    writeDiagsHashToCSV("data.csv", {"JohnnyAppleseed", "guy", "0x401123", "girl", "1234", "3.14f", "abc", "q^w^e^r^t^y", "4.101010", "T"});
+    randCharacterVector();
+    writeDiagsHashToCSV("old_data.csv", {"JohnnyAppleseed", "guy", "0x401123", "girl", "1234", "3.14f", "abc", "q^w^e^r^t^y", "4.101010", "T"});
+    autoChangeValues();
     return 0;
 }
 
+// Checks the hashes of changed to original
+bool checkHashes(){
+    ifstream readChange("change.csv");
+    ifstream readData("data.csv");
+    string line, cell, hash;
+    vector<string> changeHashes, dataHashes;
+    // Get the line
+    while(getline(readChange, line)) {
+      string last = "";
+      // Create a stream for the line
+      stringstream stream(line);
+      // For every cell in the row, update last variable
+      while(getline(stream, cell, ',')) last = cell;
+      // Store in hash array for change csv
+      changeHashes.push_back(last);
+   }
+   // Get the line
+   while(getline(readData, line)) {
+      string last = "";
+      // Create a stream for the line
+      stringstream stream(line);
+      // For every cell in the row, update last variable
+      while(getline(stream, cell, ',')) last = cell;
+      // Store in hash array for data csv
+      dataHashes.push_back(last);
+   }
+   // Check if csv's have same amount of rows
+   if (changeHashes.size() != dataHashes.size()) {
+     cout << "Change has been made!\n";
+     return false;
+   }
+   // Checks if hashes are matching
+   for (int i = 0; i < changeHashes.size(); i++) {
+     if (changeHashes.at(i).compare(dataHashes.at(i)) != 0) {
+       cout << "Changes have been made at: " << i << "\n";
+       return false;
+     }
+   }
+   return true;
+}
+
+// Automatically changes the values
+void autoChangeValues(){
+    writeDiagsHashToCSV("new_data.csv", {"idontknow", "girl", "0.401123", "guy", "5678", "-3.14f", "def", "q^w^e^r^t", "4.0101010", "C"});
+    //writeDiagsHashToCSV("change.csv", {"JohnnyAppleseed", "guy", "0x401123", "girl", "1234", "3.14f", "abc", "q^w^e^r^t^y", "4.101010", "T"});
+    if (checkHashes()) {
+       cout << "They match!\n";
+    } else {
+       cout << "They don't match!\n";
+       deleteOldCSV("new_data.csv");
+       rename("old_data.csv", "new_data.csv");
+    }
+}
+
 // Delete old csv
-void deleteOld(){
-  if (remove("old.csv") == 0) cout << "Success removing!\n";
+void deleteOldCSV(const char fileName[]){
+  if (remove(fileName) == 0) cout << "Success removing!\n";
   else cout << "Error removing!\n";
 }
 
@@ -108,18 +168,19 @@ void writeDiagsHashToCSV(char const filename[], vector<string> varHashes) {
     if (temp > maxWidth) maxWidth = temp;
   }
   // Place hashed strings into csv file in diagonal fashion
+  int a = 0;
   for (int i = 0; i < maxLength; i++) {
     int j = 0;
-    for (int k = 0; k < offset; k++) fout << randCharacter() << ",";
+    for (int k = 0; k < offset; k++) fout << randChars.at(a++) << ",";
     for (; j < varHashes.size() && j < maxWidth - offset; j++) {
       if (i < varHashes.at(j).size()) fout << varHashes.at(j).at(i) << ",";
-      else fout << randCharacter() << ",";
+      else fout << randChars.at(a++) << ",";
     }
-    for (; j < maxWidth - offset; j++) fout << randCharacter() << ",";
+    for (; j < maxWidth - offset; j++) fout << randChars.at(a++) << ",";
     offset += 1;
     fout << "\n";
   }
-  fout.close(); addRowHashes(filename); deleteOld();
+  fout.close(); addRowHashes(filename); deleteOldCSV("old.csv");
 }
 
 /**
@@ -130,4 +191,9 @@ char randCharacter() {
   int letterOrNum = rand() % 2;
   if (letterOrNum == 0) return rand() % 26 + 65;
   else return rand() % 10 + 48;
+}
+
+// Creates a global vector of random chars
+void randCharacterVector() {
+   for (int i = 0; i < 500; i++) randChars.push_back(randCharacter());
 }
