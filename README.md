@@ -15,6 +15,13 @@
 1. After compiling the .cpp files, execute the a.exe program
 2. User prompted to type anything and then hit enter to change the values automatically to predetermined values (Tests program's data checking functionality)
 3. User will be notified if changes have been made
+
+# Data Representation
+- All data is assumed to be converted into a string format before being submitted to the csv file
+- For arrays, there are no square brackets in the string, just the actual values separated by '^' instead of commas
+- Floats and Longs will have 'f's and 'L's in the string to the right of the number
+- Doubles and Integers are just simply converted to a string
+- Strings remain strings
  
 ## Contributing
 After you have a way to compile cpp you should be all set up to clone 
