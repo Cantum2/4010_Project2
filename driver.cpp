@@ -9,7 +9,6 @@
 
 using namespace std;
 
-const string FILE_NAME = "output.csv";
 vector<char> randChars;
 Encoder *encoder = new Encoder();
 
