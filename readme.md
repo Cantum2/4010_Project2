@@ -6,7 +6,7 @@
 3. You might have to restart your pc here
 
 
-# For debugging
+## For debugging
 1. install everything that mentions gdb from the mingw installer 
 2. Add MinGW/bin to your env path variable
 3. You might have to restart your pc here
