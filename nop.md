@@ -1,7 +1,7 @@
 ## Strengths
 - Hashes were hidden from IdaPro
 - The diagonal writing approach to a csv was intuitive and hid the data in a clever way
-- Filled empty cells around the diagonals of true data further hid the values, created a red herring
+- Filled empty cells around the diagonals of true data which further hid the values, created a red herring
 
 ## Weaknesses
 - Strings and names were evident and you could derive a lot about how the program worked, as well as the fact there was value checking to begin with
