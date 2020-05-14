@@ -25,12 +25,10 @@ bool checkHashes();
 void randCharacterVector();
 
 int main(){    
-    cout<<"Hello"<<endl;
-    string res = encoder->encodeVariable("guy", 5);
-    cout<<"guy5 encodes to "<<res<<endl;
-    cout<<res<< " decodes to "<<encoder->generateHash(res)<<endl;
     randCharacterVector();
     writeDiagsHashToCSV("old_data.csv", {"JohnnyAppleseed", "guy", "0x401123", "girl", "1234", "3.14f", "abc", "q^w^e^r^t^y", "4.101010", "T"});
+    cout << "Type anything and hit enter to change values...\n";
+    string any; cin >> any;
     autoChangeValues();
     return 0;
 }
